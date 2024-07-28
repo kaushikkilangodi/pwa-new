@@ -1,13 +1,13 @@
 <template>
 <div>
-    
+     <PwaInstallButton/>
     <div class="container">
     <h1>Todo List</h1>
     <TodoInput />
     <TodoList />
   </div>
    
-    <PwaInstallButton/>
+   
     <CameraAccess/>
     <Notification/>
 </div>
