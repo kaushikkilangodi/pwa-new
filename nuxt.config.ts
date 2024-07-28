@@ -1,65 +1,94 @@
-import process from 'node:process'
+import process from "node:process";
 
-const sw = process.env.SW === 'true'
+const sw = process.env.SW === "true";
 
 export default defineNuxtConfig({
-  /* ssr: false, */
+  // ssr: false,
   // typescript,
-  modules: ['@vite-pwa/nuxt'],
+  modules: ["@vite-pwa/nuxt", "@pinia/nuxt"],
   nitro: {
     esbuild: {
       options: {
-        target: 'esnext',
+        target: "esnext",
       },
     },
   },
- 
+
   pwa: {
-    strategies: sw ? 'injectManifest' : 'generateSW',
-    srcDir: sw ? 'service-worker' : undefined,
-    filename: sw ? 'sw.ts' : undefined,
-    registerType: 'autoUpdate',
+    strategies: sw ? "injectManifest" : "generateSW",
+    srcDir: sw ? "service-worker" : undefined,
+    filename: sw ? "sw.ts" : undefined,
+    registerType: "autoUpdate",
     manifest: {
-      name: 'Nuxt Vite PWA',
-      short_name: 'NuxtVitePWA',
-      theme_color: '#ffffff',
+      name: "Nuxt 3 ToDo List",
+      short_name: "ToDoList",
+      description: "A simple to-do list application built with Nuxt 3 ",
+      theme_color: "#ffffff",
+      background_color: "#ffffff",
+      display: "standalone",
+      orientation: "portrait-primary",
+      start_url: "/",
       icons: [
         {
-          src: 'icons/icon_192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
+          src: "icons/icon_192x192.png",
+          sizes: "192x192",
+          type: "image/png",
         },
         {
-          src: 'icons/icon_512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
+          src: "icons/icon_512x512.png",
+          sizes: "512x512",
+          type: "image/png",
         },
         {
-          src: 'icons/icon_512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'any maskable',
+          src: "icons/icon_512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+      screenshots: [
+        {
+          src: "images/img1.png",
+          sizes: "640x480",
+          type: "image/png",
+          label: "Home Screen",
+        },
+        {
+          src: "images/img2.png",
+          sizes: "640x480",
+          type: "image/png",
+          label: "Features Page",
+        },
+        {
+          src: "images/img3.png",
+          sizes: "640x480",
+          type: "image/png",
+          label: "Features Page",
+        },
+        {
+          src: "images/img4.png",
+          sizes: "640x480",
+          type: "image/png",
+          label: "Features Page",
         },
       ],
     },
     workbox: {
-      globPatterns: ['*/.{js,css,html,png,svg,ico}'],
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
     },
     injectManifest: {
-      globPatterns: ['*/.{js,css,html,png,svg,ico}'],
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
     },
     client: {
       installPrompt: true,
-      // you don't need to include this: only for testing purposes
-      // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-      periodicSyncForUpdates: 20,
+      periodicSyncForUpdates: 3600, // 1 hour for production, 20 seconds for testing
     },
     devOptions: {
       enabled: true,
       suppressWarnings: true,
-      navigateFallback: '/',
+      navigateFallback: "/",
       navigateFallbackAllowlist: [/^\/$/],
-      type: 'module',
+      type: "module",
     },
   },
-})
+});
